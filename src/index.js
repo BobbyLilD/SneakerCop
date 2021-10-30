@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
-const hello = require('./item_update').helloWorld;
+const hello = require('./services/item-update.service').helloWorld;
 
 const app = express();
 
