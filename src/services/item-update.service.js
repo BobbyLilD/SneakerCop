@@ -18,10 +18,10 @@ async function nikeSnkrsTimeline(){
         res => driver.getPageSource()
     ).then(
         result => {
-            var doc = htmlparser.parseDocument(result);
-            var dom = cheerio.load(doc);
-            var linkArr = [];
-            var linkBase = 'https://www.nike.com'
+            let doc = htmlparser.parseDocument(result);
+            let dom = cheerio.load(doc);
+            let linkArr = [];
+            let linkBase = 'https://www.nike.com'
             dom('a[class="card-link d-sm-b"]',
             'div[class="product-card ncss-row mr0-sm ml0-sm"]')
             .each(function(i,e) {
@@ -39,14 +39,14 @@ async function nikeSnkrsIndividualItemParse(linkArr, driver, iter){
     
     await driver.get(linkArr[iter]);
     console.log(linkArr[iter] + " loaded");
-    var result = await driver.getPageSource();
+    let result = await driver.getPageSource();
     console.log("source loaded");
-    var doc = htmlparser.parseDocument(result);
-    var dom = cheerio.load(doc);
-    var color = dom('h5[class="headline-1 pb3-sm"]','div[class="product-info ncss-col-sm-12 full"]').text();
-    var name = dom('h1[class="headline-5 pb3-sm"]','div[class="product-info ncss-col-sm-12 full"]').text();
-    var price = dom('div[class="headline-5 pb6-sm fs14-sm fs16-md"]','div[class="product-info ncss-col-sm-12 full"]').text();
-    var date = dom('div[class="available-date-component"]').text();
+    let doc = htmlparser.parseDocument(result);
+    let dom = cheerio.load(doc);
+    let color = dom('h5[class="headline-1 pb3-sm"]','div[class="product-info ncss-col-sm-12 full"]').text();
+    let name = dom('h1[class="headline-5 pb3-sm"]','div[class="product-info ncss-col-sm-12 full"]').text();
+    let price = dom('div[class="headline-5 pb6-sm fs14-sm fs16-md"]','div[class="product-info ncss-col-sm-12 full"]').text();
+    let date = dom('div[class="available-date-component"]').text();
     console.log({
         'color':color,
         'name':name,
