@@ -5,6 +5,7 @@ const PaymentInfo = require('./PaymentInfo.model');
 const StoreOffer = require("./StoreOffer.model");
 const BuyRequest = require("./BuyRequest.model");
 const ShippingAddress = require("./ShippingAddress.model");
+const Token = require("./Token.model");
 
 class User extends Sequelize.Model {}
 
@@ -61,6 +62,12 @@ User.hasMany(ShippingAddress, {
   onDelete: "cascade"
 })
 ShippingAddress.belongsTo(User);
+
+User.hasMany(Token, {
+  foreignKey: "userId",
+});
+Token.belongsTo(User);
+
 
 module.exports = User;
 
