@@ -1,5 +1,10 @@
 const { Sequelize } = require("sequelize");
 const { sequelize } = require("..");
+const Item = require("./Item.model");
+const PaymentInfo = require('./PaymentInfo.model');
+const StoreOffer = require("./StoreOffer.model");
+const BuyRequest = require("./BuyRequest.model");
+const ShippingAddress = require("./ShippingAddress.model");
 
 class User extends Sequelize.Model {}
 
@@ -11,15 +16,15 @@ User.init(
       defaultValue: Sequelize.DataTypes.UUIDV4,
     },
     password: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(15),
       allowNull: false,
     },
     email: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(30),
       allowNull: false,
     },
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(30),
       allowNull: true,
       defaultValue: "None",
     },
@@ -30,3 +35,32 @@ User.init(
   },
   { sequelize: sequelize, underscored: true, modelName: "user" }
 );
+
+User.hasMany(PaymentInfo, {
+    foreignKey: "userId",
+    onDelete: "cascade"
+  });
+PaymentInfo.belongsTo(User);
+
+User.belongsToMany(Item, {
+  through: "Wish"
+});
+Item.belongsToMany(User, {
+  through: "Wish"
+});
+
+User.belongsToMany(StoreOffer, {
+  through: BuyRequest
+});
+StoreOffer.belongsToMany(User, {
+  through: BuyRequest
+});
+
+User.hasMany(ShippingAddress, {
+  foreignKey: "userId",
+  onDelete: "cascade"
+})
+ShippingAddress.belongsTo(User);
+
+module.exports = User;
+

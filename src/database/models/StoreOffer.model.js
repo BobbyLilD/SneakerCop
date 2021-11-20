@@ -1,9 +1,9 @@
 const { Sequelize } = require("sequelize");
 const { sequelize } = require("..");
 
-class StoreToItem extends Sequelize.Model {}
+class StoreOffer extends Sequelize.Model {}
 
-StoreToItem.init(
+StoreOffer.init(
     {
         id: {
             type: Sequelize.DataTypes.UUID,
@@ -11,11 +11,11 @@ StoreToItem.init(
             defaultValue: Sequelize.DataTypes.UUIDV4,
         },
         store:{
-            type: Sequelize.ENUM(),//СДЕЛАТЬ ПЕРЕЧИСЛЕНИЕ
+            type: Sequelize.ENUM('Nike SNKRS', 'Nike', 'Brandshop' , 'KM20', 'Adidas'),
             allowNull: false
         },
         link: {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(150),
             allowNull: false
         },
         price: {
@@ -24,13 +24,14 @@ StoreToItem.init(
         },
         date: {
             type: Sequelize.DATE,
-            allowNul: false
+            allowNull: false
         },
         availableSizes: {
-            //СДЕЛАТЬ МАССИВ ФЛОУТОВ
+            type: Sequelize.ARRAY(Sequelize.TEXT),
+            allowNull: false
         }
     },
-    {sequelize: sequelize, underscored: true, modelname: "storeToItem"}
+    {sequelize: sequelize, underscored: true, modelname: "storeOffer"}
 );
 
-module.exports = StoreToItem;
+module.exports = StoreOffer;

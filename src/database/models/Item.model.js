@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize");
 const { sequelize } = require("..");
+const Image = require("./Image.model");
+const StoreOffer = require("./StoreOffer.model");
 
 class Item extends Sequelize.Model {}
 
@@ -11,11 +13,11 @@ Item.init(
             defaultValue: Sequelize.DataTypes.UUIDV4,
         },
         name: {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(100),
             allowNull: false
         }, 
         brand: {
-            type: Sequelize.STRING, // МЭЙБИ СДЕЛАТЬ ЕНУМ
+            type: Sequelize.STRING(100), // МЭЙБИ СДЕЛАТЬ ЕНУМ
             allowNull: false
         },
         publishDate: {
@@ -23,7 +25,20 @@ Item.init(
             allowNull: false
         }
     },
-    { sequelize: sequelize, underscored: true, modelname: "Item"}
+    { sequelize: sequelize, underscored: true, modelname: "item"}
 );
+
+
+Item.hasMany(Image, {
+    foreignKey: "itemId",
+    onDelete: "cascade"
+})
+Image.belongsTo(Item);
+
+Item.hasMany(StoreOffer, {
+    foreignKey: "itemId",
+    onDelete: "cascade"
+})
+StoreOffer.belongsTo(Item);
 
 module.exports = Item
