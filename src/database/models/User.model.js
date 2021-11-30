@@ -6,6 +6,7 @@ const StoreOffer = require("./StoreOffer.model");
 const BuyRequest = require("./BuyRequest.model");
 const ShippingAddress = require("./ShippingAddress.model");
 const Token = require("./Token.model");
+const Wish = require("./Wish.model");
 
 class User extends Sequelize.Model {}
 
@@ -44,10 +45,14 @@ User.hasMany(PaymentInfo, {
 PaymentInfo.belongsTo(User);
 
 User.belongsToMany(Item, {
-  through: "Wish"
+  through: Wish,
+  foreignKey: "userId",
+  onDelete: "cascade"
 });
 Item.belongsToMany(User, {
-  through: "Wish"
+  through: Wish,
+  foreignKey: "itemId",
+  onDelete: "cascade"
 });
 
 User.belongsToMany(StoreOffer, {

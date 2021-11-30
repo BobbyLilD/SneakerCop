@@ -16,11 +16,7 @@ async function getItems(req,res) {
 }
 
 async function getItemById(req,res) {
-    let item = await Item.findByPk({
-        where: {
-            id: req.params.id
-        }
-    });
+    let item = await Item.findByPk(req.params.id);
     res.status(200).json(item);
 }
 
