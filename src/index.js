@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
-const hello = require('./services/item-update.service').helloWorld;
+const itemUpdater = require('./services/item-update.service');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   });
 
   app.get('/', (req, res) => {
-      res.status(200).json({message: hello()});
+      res.status(200).json({message: itemUpdater.nikeSnkrsTimeline()});
   })
 
   http.createServer(app).listen(80, () => {
