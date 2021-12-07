@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   });
 
   app.get('/', (req, res) => {
-      res.status(200).json({message: itemUpdater.nikeSnkrsTimeline()});
+      res.status(200).json({message: itemUpdater.downloadTest()});
   })
 
   http.createServer(app).listen(80, () => {
