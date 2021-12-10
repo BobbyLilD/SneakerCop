@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   });
 
   app.get('/', (req, res) => {
-      res.status(200).json({message: itemUpdater.downloadTest()});
+      res.status(200).json({message: itemUpdater.parseItems()});
   })
 
   http.createServer(app).listen(80, () => {
