@@ -1,9 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
-const itemUpdater = require('./services/item-update.service');
+const itemUpdater = require('./services/nike-item-update.service');
+const { initDB } = require('./database');
 
 const app = express();
+
+initDB();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));

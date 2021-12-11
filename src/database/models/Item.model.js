@@ -17,7 +17,11 @@ Item.init(
             allowNull: false
         }, 
         brand: {
-            type: Sequelize.STRING(100), // МЭЙБИ СДЕЛАТЬ ЕНУМ
+            type: Sequelize.STRING(20), // МЭЙБИ СДЕЛАТЬ ЕНУМ
+            allowNull: false
+        },
+        styleCode: {
+            type: Sequelize.STRING(15),
             allowNull: false
         },
         publishDate: {
