@@ -1,11 +1,14 @@
 const { Router } = require("express");
 const ErrorResponse = require("../classes/error-response");
 const { nanoid } = require("nanoid");
-const { asyncHandler } = require("../middlewares/middlewares");
+const { asyncHandler, requireToken } = require("../middlewares/middlewares");
 const Image = require('../database/models/Image.model')
 
-function initRouter(){
+const router = Router();
 
+function initRouter(){
+    router.get('/:itemId', asyncHandler(getFrontImage))
+    router.get('/:itemId/all', asyncHandler(getImages))
 }
 
 async function getImages(req,res) {
@@ -83,3 +86,7 @@ async function deleteImages(req,res){
     }
     res.status(200).json({images});
 }
+
+initRouter();
+
+module.exports = router;

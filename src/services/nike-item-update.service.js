@@ -157,20 +157,11 @@ function parseItemSizes(source, output) {
 }
 
 async function downloadAndSaveImages(name, colorCode, links) {
-  destinations = [];
+  let destinations = [];
+  let successfulDownloads = 0;
   for (let i = 0; i < links.length; i++) {
     curDest =
-      "D:/Programming/JS/SneakerCop/Storage/" + name + "_" + colorCode + "/"; //D:/JS_Projects/SneakerCop
-    destinations[i] =
-      "D:/Programming/JS/SneakerCop/Storage/" +
-      name +
-      "_" +
-      colorCode +
-      "/" +
-      name +
-      "_" +
-      i +
-      ".jpg"; //D:/JS_Projects/SneakerCop
+      "D:/Programming/JS/SneakerCop/Front/src/assets/images/" + name + "_" + colorCode + "/"; //D:/JS_Projects/SneakerCop
     links[i] = links[i]
       .substring(0, links[i].lastIndexOf("/") + 1)
       .concat(".jpg");
@@ -180,6 +171,17 @@ async function downloadAndSaveImages(name, colorCode, links) {
     const res = await fetch(links[i]);
     if (res.status != 404) {
       await download(links[i], curDest, { filename: name + "_" + i + ".jpg" });
+      destinations[successfulDownloads] =
+      // "../../../Storage/" +
+      name +
+      "_" +
+      colorCode +
+      "/" +
+      name +
+      "_" +
+      i +
+      ".jpg"; //D:/JS_Projects/SneakerCop
+      successfulDownloads++;
     }
   }
   return destinations;

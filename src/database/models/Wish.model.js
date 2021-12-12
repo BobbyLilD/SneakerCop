@@ -3,7 +3,7 @@ const { sequelize } = require("..");
 
 class Wish extends Sequelize.Model {}
 
-Token.init(
+Wish.init(
   {},
   { sequelize: sequelize, underscored: true, modelName: "wish" }
 );

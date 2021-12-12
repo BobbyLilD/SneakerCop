@@ -3,6 +3,11 @@ const cors = require('cors');
 const http = require('http');
 const itemUpdater = require('./services/nike-item-update.service');
 const { initDB } = require('./database');
+const apiItemRouter = require('./controllers/api-items.controller');
+const middlewares = require("./middlewares/middlewares");
+const apiImageRouter = require('./controllers/api-image.contoller');
+const apiAuthRouter = require('./controllers/api-auth.controller');
+const apiUserRouter = require('./controllers/api-users.controller');
 
 const app = express();
 
@@ -24,9 +29,17 @@ app.use((req, res, next) => {
     next();
   });
 
+  app.use("/api/items", apiItemRouter);
+  app.use("/api/images", apiImageRouter);
+  app.use("/api/auth", apiAuthRouter);
+  app.use("/api/users", apiUserRouter);
+
   app.get('/', (req, res) => {
       res.status(200).json({message: itemUpdater.parseItems()});
   })
+
+  app.use(middlewares.notFound);
+  app.use(middlewares.errorHandler);
 
   http.createServer(app).listen(80, () => {
     console.log('Server is working on port 80');

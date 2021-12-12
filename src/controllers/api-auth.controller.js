@@ -7,7 +7,7 @@ const { asyncHandler } = require("../middlewares/middlewares");
 
 const router = Router();
 
-function initRouters() {
+function initRouter() {
   router.post("/registration", asyncHandler(registration));
   router.post("/login", asyncHandler(login));
 }
@@ -21,15 +21,18 @@ async function registration(req, res, next) {
   if (used) {
     throw new ErrorResponse("login or email already used", 400);
   }
-  let user = await User.create(req.body);
+  let user = await User.create({
+    lastChecked: Date.now(),
+    ...req.body
+  });
   res.status(200).json(user);
 }
 
 async function login(req, res, next) {
   let user = await User.findOne({
-    attributes: ["id", "password", "login"],
+    attributes: ["id", "password", "email"],
     where: {
-      login: req.body.login,
+      email: req.body.email,
       password: req.body.password,
     },
   });
@@ -41,9 +44,9 @@ async function login(req, res, next) {
     userId: user.id,
     value: nanoid(128),
   });
-  res.status(200).josn({ accessToken: token.value });
+  res.status(200).json({ accessToken: token.value });
 }
 
-initRouters();
+initRouter();
 
 module.exports = router;
