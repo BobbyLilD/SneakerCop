@@ -5,7 +5,7 @@ const { asyncHandler } = require("../middlewares/middlewares");
 
 const router = Router();
 
-function initRouters() {
+function initRouter() {
     
 }
 
@@ -72,7 +72,7 @@ async function deleteBuyRequestById(req,res) {
     res.status(200).json({requests});
 }
 
-initRouters();
+initRouter();
 
 module.exports = router;
 

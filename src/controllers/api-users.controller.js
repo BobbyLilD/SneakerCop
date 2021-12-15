@@ -5,7 +5,7 @@ const { asyncHandler, requireToken } = require("../middlewares/middlewares");
 
 const router = Router();
 
-function initRouters() {
+function initRouter() {
   router.get("/me", asyncHandler(requireToken), asyncHandler(getUserInfo));
   router.patch("/me", asyncHandler(requireToken), asyncHandler(updateUserByID));
   router.delete("/logout", asyncHandler(requireToken), asyncHandler(logout));
@@ -27,6 +27,6 @@ async function logout(req, res, next) {
   res.status(200).json("logged out");
 }
 
-initRouters();
+initRouter();
 
 module.exports = router;

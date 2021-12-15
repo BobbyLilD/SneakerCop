@@ -5,7 +5,7 @@ const { asyncHandler } = require("../middlewares/middlewares");
 
 const router = Router();
 
-function initRouters() {
+function initRouter() {
     
 }
 
@@ -80,6 +80,6 @@ async function deleteStoreOfferById(req,res){
     res.status(200).json({offers});
 }
 
-initRouters();
+initRouter();
 
 module.exports = router;

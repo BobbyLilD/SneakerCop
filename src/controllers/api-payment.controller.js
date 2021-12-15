@@ -1,12 +1,16 @@
 const { Router } = require("express");
 const ErrorResponse = require("../classes/error-response");
 const PaymentInfo = require("../database/models/PaymentInfo.model");
-const { asyncHandler } = require("../middlewares/middlewares");
+const { asyncHandler, requireToken } = require("../middlewares/middlewares");
 
 const router = Router();
 
-function initRouters() {
-    
+function initRouter() {
+    router.get('/', asyncHandler(requireToken), asyncHandler(getPaymentInfos));
+    router.get('/:id', asyncHandler(requireToken), asyncHandler(getPaymentInfoByPk));
+    router.post('/', asyncHandler(requireToken), asyncHandler(createPaymentInfo));
+    router.patch('/:id', asyncHandler(requireToken), asyncHandler(updatePaymentInfo));
+    router.delete('/:id', asyncHandler(requireToken), asyncHandler(deletePaymentInfoById));
 }
 
 async function getPaymentInfos(req,res) {
@@ -74,6 +78,6 @@ async function deletePaymentInfoById(req,res) {
     res.status(200).json({infos});
 }
 
-initRouters();
+initRouter();
 
 module.exports = router;

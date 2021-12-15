@@ -1,12 +1,16 @@
 const { Router } = require("express");
 const ErrorResponse = require("../classes/error-response");
 const ShippingAddress = require("../database/models/ShippingAddress.model");
-const { asyncHandler } = require("../middlewares/middlewares");
+const { asyncHandler, requireToken } = require("../middlewares/middlewares");
 
 const router = Router();
 
-function initRouters() {
-    
+function initRouter() {
+    router.get('/', asyncHandler(requireToken), asyncHandler(getShippingAddresses));
+    router.get('/:id', asyncHandler(requireToken), asyncHandler(getShippingAddressByPk));
+    router.post('/', asyncHandler(requireToken), asyncHandler(createShippingAddress));
+    router.patch('/:id', asyncHandler(requireToken), asyncHandler(updateShippingAddress));
+    router.delete('/:id', asyncHandler(requireToken), asyncHandler(deleteShippingAddressById));
 }
 
 async function getShippingAddresses(req,res) {
@@ -74,6 +78,6 @@ async function deleteShippingAddressById(req,res) {
     res.status(200).json({infos});
 }
 
-initRouters();
+initRouter();
 
 module.exports = router;

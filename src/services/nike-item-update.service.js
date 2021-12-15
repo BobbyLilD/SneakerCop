@@ -161,7 +161,7 @@ async function downloadAndSaveImages(name, colorCode, links) {
   let successfulDownloads = 0;
   for (let i = 0; i < links.length; i++) {
     curDest =
-      "D:/Programming/JS/SneakerCop/Front/src/assets/images/" + name + "_" + colorCode + "/"; //D:/JS_Projects/SneakerCop
+      "D:/JS_Projects/SneakerCop/Front/src/assets/images/" + name + "_" + colorCode + "/"; //D:/JS_Projects/SneakerCop  //D:/Programming/JS/SneakerCop
     links[i] = links[i]
       .substring(0, links[i].lastIndexOf("/") + 1)
       .concat(".jpg");
