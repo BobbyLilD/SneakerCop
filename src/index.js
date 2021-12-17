@@ -11,6 +11,7 @@ const apiUserRouter = require('./controllers/api-users.controller');
 const apiShippingRouter = require('./controllers/api-shipping.controller');
 const apiPaymentRouter = require('./controllers/api-payment.controller');
 const apiWishRouter = require('./controllers/api-wish.controller');
+const apiOfferRouter = require('./controllers/api-storeOffer.controller');
 
 const app = express();
 
@@ -36,9 +37,10 @@ app.use((req, res, next) => {
   app.use("/api/images", apiImageRouter);
   app.use("/api/auth", apiAuthRouter);
   app.use("/api/users", apiUserRouter);
-  app.use("/api/wihes", apiWishRouter);
+  app.use("/api/wishes", apiWishRouter);
   app.use("/api/payments", apiPaymentRouter);
   app.use("/api/shippings", apiShippingRouter);
+  app.use("/api/offers", apiOfferRouter);
 
   app.get('/', (req, res) => {
       res.status(200).json({message: itemUpdater.parseItems()});

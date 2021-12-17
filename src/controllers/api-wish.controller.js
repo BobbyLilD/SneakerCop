@@ -8,26 +8,26 @@ const router = Router();
 function initRouter() {
     router.get('/', asyncHandler(requireToken), asyncHandler(getWishes));
     router.get('/:itemId', asyncHandler(requireToken), asyncHandler(getWish));
-    router.post('/', asyncHandler(requireToken), asyncHandler(createWish));
+    router.post('/:itemId', asyncHandler(requireToken), asyncHandler(createWish));
     router.delete('/:itemId', asyncHandler(requireToken), asyncHandler(deleteWish));
 }
 
 async function getWish(req,res) {
-    let wish = await Wish.getOne({
+    let wish = await Wish.findOne({
         where: {
             userId: req.userId,
             itemId: req.params.itemId
         }
     })
     if(!wish) {
-        res.status(404);
+        res.status(200).json({wish: false});
     } else{
-        res.status(200);
+        res.status(200).json({wish: true});
     }
 }
 
 async function getWishes(req,res) {
-    let wishes = await Wish.getAll({
+    let wishes = await Wish.findAll({
         where: {
             userId: req.userId
         }
@@ -41,7 +41,7 @@ async function getWishes(req,res) {
 async function createWish(req,res) {
     let wish = await Wish.create({
         userId: req.userId,
-        ...req.body
+        itemId: req.params.itemId
     })
     if(!wish){
         throw new ErrorResponse("Failed to create", 500);
@@ -50,7 +50,7 @@ async function createWish(req,res) {
 }
 
 async function deleteWishes(req,res) {
-    await Wish.delete({
+    await Wish.destroy({
         where: {
             userId: req.userId
         }
@@ -67,21 +67,13 @@ async function deleteWishes(req,res) {
 }
 
 async function deleteWish(req,res) {
-    await Wish.delete({
+    await Wish.destroy({
         where: {
             userId: req.userId,
             itemId: req.params.itemId
         }
     })
-    let wishes = await Wish.getAll({
-        where: {
-            userId: req.userId
-        }
-    })
-    if(!wishes){
-        throw new ErrorResponse("Failed to get", 500);
-    }
-    res.status(200).json({wishes});
+    res.status(200).json("Done");
 }
 
 initRouter();

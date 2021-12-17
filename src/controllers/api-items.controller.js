@@ -3,12 +3,16 @@ const ErrorResponse = require("../classes/error-response");
 const { asyncHandler, requireToken } = require("../middlewares/middlewares");
 const Item = require("../database/models/Item.model");
 const User = require("../database/models/User.model");
+const Wish = require("../database/models/Wish.model");
+const { Sequelize } = require("sequelize");
+const Op = Sequelize.Op;
 
 const router = Router();
 
 function initRouter() {
   router.get("/", asyncHandler(requireToken), asyncHandler(getItems));
-  router.get("/:id", asyncHandler(getItemById));
+  router.get("/certain/:id", asyncHandler(getItemById));
+  router.get("/wished/", asyncHandler(requireToken), asyncHandler(getItemsByWishlist))
 }
 
 async function getItems(req, res) {
@@ -36,6 +40,31 @@ async function getItemsByTime(req, res) {
     },
   });
   res.status(200).json(items);
+}
+
+async function getItemsByWishlist(req,res) {
+  console.log("Done");
+  let wishlist = await Wish.findAll({
+    where:{
+      userId: req.userId
+    }
+  })
+  itemIDs = [];
+  wishlist.forEach(element => {
+    itemIDs.push(element.itemId)
+  });
+  if(!wishlist){
+    throw new ErrorResponse("Something went wrong", 500);
+  }
+  let items = await Item.findAll({
+    where: {
+      id: {[Op.in] : itemIDs}
+    }
+  })
+  if (!items){
+    throw new ErrorResponse("Not found", 404);
+  }
+  res.status(200).json({items});
 }
 
 async function updateItemById(req, res) {

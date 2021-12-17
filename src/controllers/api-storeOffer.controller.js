@@ -6,7 +6,7 @@ const { asyncHandler } = require("../middlewares/middlewares");
 const router = Router();
 
 function initRouter() {
-    
+    router.get('/:itemId', asyncHandler(getStoreOffers));
 }
 
 async function getStoreOffers(req,res) {
