@@ -51,7 +51,7 @@ async function updateShippingAddress(req,res) {
 }
 
 async function deleteShippingAddresses(req, res){
-    await ShippingAddress.delete({
+    await ShippingAddress.destroy({
         where: {
             userId : req.userId
         }
@@ -65,7 +65,7 @@ async function deleteShippingAddresses(req, res){
 }
 
 async function deleteShippingAddressById(req,res) {
-    await ShippingAddress.delete({
+    await ShippingAddress.destroy({
         where: {
             id : req.params.id
         }

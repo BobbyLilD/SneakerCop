@@ -39,7 +39,7 @@ app.use((req, res, next) => {
   app.use("/api/users", apiUserRouter);
   app.use("/api/wishes", apiWishRouter);
   app.use("/api/payments", apiPaymentRouter);
-  app.use("/api/shippings", apiShippingRouter);
+  app.use("/api/addresses", apiShippingRouter);
   app.use("/api/offers", apiOfferRouter);
 
   app.get('/', (req, res) => {
